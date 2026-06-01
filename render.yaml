@@ -1,0 +1,45 @@
+# Render Blueprint — déploiement du proxy Smart Assistance
+# Doc : https://render.com/docs/blueprint-spec
+#
+# Usage :
+# 1. Pusher ce repo sur GitHub
+# 2. Sur Render → New → Blueprint → connecter le repo
+# 3. Renseigner OPENAI_API_KEY dans le dashboard quand demandé
+# 4. Render génère APP_API_KEY automatiquement, à copier dans smart_assistance/env.json
+
+services:
+  - type: web
+    name: smart-assistance-proxy
+    runtime: docker
+    repo: # rempli automatiquement par Render lors du lien
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: ./server
+    plan: free                   # 750h/mois, spin-down après 15 min d'inactivité
+    region: frankfurt            # proche de la Côte d'Ivoire ; sinon : oregon, singapore, ohio
+    healthCheckPath: /health
+    autoDeploy: true             # redeploie à chaque push sur la branche par défaut
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false              # à renseigner manuellement dans le dashboard (jamais committé)
+      - key: APP_API_KEY
+        generateValue: true      # Render génère une valeur aléatoire forte une fois pour toutes
+      - key: OPENAI_MODEL
+        value: gpt-4o
+      - key: MAX_TOKENS
+        value: "1000"
+      - key: RATE_LIMIT_PER_MIN
+        value: "30"
+      - key: MODERATION_ENABLED
+        value: "true"
+      - key: APP_VERSION
+        value: "1.0.0"
+      # CORS : vide = bloqué (sain pour app mobile native). Pour autoriser un domaine web :
+      # - key: ALLOWED_ORIGINS
+      #   value: https://app.example.ci
+      # Sentry : décommentez et renseignez le DSN pour activer le crash reporting.
+      # - key: SENTRY_DSN
+      #   sync: false
+      # - key: SENTRY_ENVIRONMENT
+      #   value: production
+      # - key: SENTRY_TRACES_SAMPLE_RATE
+      #   value: "0.1"

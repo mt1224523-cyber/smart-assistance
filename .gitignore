@@ -1,0 +1,80 @@
+# ============ Secrets — JAMAIS commiter ============
+**/env.json
+**/.env
+!**/.env.example
+**/key.properties
+!**/key.properties.example
+*.jks
+*.keystore
+*.pem
+*.p12
+
+# ============ Flutter / Dart ============
+smart_assistance/.dart_tool/
+smart_assistance/.flutter-plugins
+smart_assistance/.flutter-plugins-dependencies
+smart_assistance/.pub-cache/
+smart_assistance/.pub/
+smart_assistance/build/
+smart_assistance/.metadata
+smart_assistance/pubspec.lock
+smart_assistance/coverage/
+
+# Obfuscation / symbols (à conserver hors du repo, dans un coffre)
+smart_assistance/build/symbols/
+**/app.*.symbols
+**/app.*.map.json
+
+# ============ Android ============
+smart_assistance/android/.gradle/
+smart_assistance/android/.kotlin/
+smart_assistance/android/app/debug/
+smart_assistance/android/app/profile/
+smart_assistance/android/app/release/
+smart_assistance/android/app/build/
+smart_assistance/android/build/
+smart_assistance/android/captures/
+smart_assistance/android/local.properties
+**/hs_err_pid*.log
+**/replay_pid*.log
+**/*.hprof
+
+# ============ iOS ============
+smart_assistance/ios/.symlinks/
+smart_assistance/ios/Pods/
+smart_assistance/ios/Flutter/Flutter.framework
+smart_assistance/ios/Flutter/Flutter.podspec
+smart_assistance/ios/Flutter/.last_build_id
+**/Podfile.lock
+
+# ============ Python serveur ============
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+**/.venv/
+**/venv/
+**/env/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/htmlcov/
+.coverage
+*.egg-info/
+
+# ============ IDE / OS ============
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# ============ Divers ============
+*.log
+*.bak
+*.tmp
