@@ -1,0 +1,107 @@
+name: flutter
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'smart_assistance/**'
+      - '.github/workflows/flutter.yml'
+  pull_request:
+    paths:
+      - 'smart_assistance/**'
+      - '.github/workflows/flutter.yml'
+
+defaults:
+  run:
+    working-directory: smart_assistance
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Format check
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Test
+        run: flutter test --coverage
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-coverage
+          path: smart_assistance/coverage/lcov.info
+          if-no-files-found: ignore
+
+  build-android:
+    needs: analyze-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Build APK debug uniquement en CI : la prod nécessite le keystore (non committé).
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Build APK debug
+        env:
+          # Si les secrets PROXY_BASE_URL / APP_API_KEY ne sont pas définis dans
+          # Settings → Secrets → Actions, on retombe sur des placeholders.
+          PROXY_BASE_URL: ${{ secrets.PROXY_BASE_URL || 'https://example.invalid' }}
+          APP_API_KEY: ${{ secrets.APP_API_KEY || 'ci-placeholder' }}
+        run: |
+          flutter build apk --debug \
+            --dart-define=PROXY_BASE_URL=$PROXY_BASE_URL \
+            --dart-define=APP_API_KEY=$APP_API_KEY
+
+      - name: Upload APK debug
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug.apk
+          path: smart_assistance/build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+
+      - name: Build APK release (non signé)
+        env:
+          PROXY_BASE_URL: ${{ secrets.PROXY_BASE_URL || 'https://example.invalid' }}
+          APP_API_KEY: ${{ secrets.APP_API_KEY || 'ci-placeholder' }}
+        run: |
+          flutter build apk --release \
+            --dart-define=PROXY_BASE_URL=$PROXY_BASE_URL \
+            --dart-define=APP_API_KEY=$APP_API_KEY
+
+      - name: Upload APK release (signé debug)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.apk
+          path: smart_assistance/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
