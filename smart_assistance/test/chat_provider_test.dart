@@ -84,8 +84,7 @@ void main() {
   test('sendMessage diffuse les chunks et compose la réponse complète',
       () async {
     when(() => ai.streamResponse(any(),
-            imagePaths: any(named: 'imagePaths'),
-            locale: any(named: 'locale')))
+            imagePaths: any(named: 'imagePaths'), locale: any(named: 'locale')))
         .thenAnswer((_) => Stream<AiStreamEvent>.fromIterable(const [
               AiChunk('Bonj'),
               AiChunk('our '),
@@ -107,8 +106,7 @@ void main() {
 
   test('AiError bascule le message bot en statut erreur', () async {
     when(() => ai.streamResponse(any(),
-            imagePaths: any(named: 'imagePaths'),
-            locale: any(named: 'locale')))
+            imagePaths: any(named: 'imagePaths'), locale: any(named: 'locale')))
         .thenAnswer((_) => Stream<AiStreamEvent>.fromIterable(const [
               AiError('network', 'pas de connexion'),
             ]));
@@ -127,22 +125,19 @@ void main() {
     expect(provider.messages.single.content, 'Bienvenue');
     expect(provider.messages.single.isUser, isFalse);
     verifyNever(() => ai.streamResponse(any(),
-        imagePaths: any(named: 'imagePaths'),
-        locale: any(named: 'locale')));
+        imagePaths: any(named: 'imagePaths'), locale: any(named: 'locale')));
   });
 
   test('sendMessage vide ne déclenche aucun appel', () async {
     await provider.sendMessage('   ');
     expect(provider.messages, isEmpty);
     verifyNever(() => ai.streamResponse(any(),
-        imagePaths: any(named: 'imagePaths'),
-        locale: any(named: 'locale')));
+        imagePaths: any(named: 'imagePaths'), locale: any(named: 'locale')));
   });
 
   test('clearHistory vide la liste et appelle le repository', () async {
     when(() => ai.streamResponse(any(),
-            imagePaths: any(named: 'imagePaths'),
-            locale: any(named: 'locale')))
+            imagePaths: any(named: 'imagePaths'), locale: any(named: 'locale')))
         .thenAnswer((_) => Stream<AiStreamEvent>.fromIterable(const [
               AiDone('réponse'),
             ]));
@@ -159,8 +154,7 @@ void main() {
     await provider.setTtsEnabled(false);
 
     when(() => ai.streamResponse(any(),
-            imagePaths: any(named: 'imagePaths'),
-            locale: any(named: 'locale')))
+            imagePaths: any(named: 'imagePaths'), locale: any(named: 'locale')))
         .thenAnswer((_) => Stream<AiStreamEvent>.fromIterable(const [
               AiDone('réponse'),
             ]));

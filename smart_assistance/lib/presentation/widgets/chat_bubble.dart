@@ -63,9 +63,9 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final botBg = isDark ? AppTheme.botMessageColorDark : AppTheme.botMessageColor;
-    final botText =
-        isDark ? AppTheme.textPrimaryDark : AppTheme.textPrimary;
+    final botBg =
+        isDark ? AppTheme.botMessageColorDark : AppTheme.botMessageColor;
+    final botText = isDark ? AppTheme.textPrimaryDark : AppTheme.textPrimary;
     final semanticLabel = message.isUser
         ? 'Vous avez dit : ${message.content}'
         : "L'assistant a répondu : ${message.content}";
@@ -99,8 +99,7 @@ class ChatBubble extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color:
-                        message.isUser ? AppTheme.userMessageColor : botBg,
+                    color: message.isUser ? AppTheme.userMessageColor : botBg,
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: const Radius.circular(16),

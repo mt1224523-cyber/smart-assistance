@@ -268,9 +268,10 @@ class _ChatScreenState extends State<ChatScreen> {
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white12
-                              : Colors.grey[100],
+                          fillColor:
+                              Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.white12
+                                  : Colors.grey[100],
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 20,
                             vertical: 14,

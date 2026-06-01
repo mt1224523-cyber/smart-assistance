@@ -34,8 +34,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           ),
           _Section(
             title: 'Vos droits',
-            body:
-                "Vous pouvez :\n"
+            body: "Vous pouvez :\n"
                 "• Effacer votre historique depuis l'application.\n"
                 "• Désinstaller l'application : toutes vos données locales sont alors supprimées.\n"
                 "• Demander la suppression de toute donnée résiduelle en nous contactant.",

@@ -11,6 +11,10 @@ on:
       - 'smart_assistance/**'
       - '.github/workflows/flutter.yml'
 
+# Forcer les actions JS à utiliser Node.js 24 (Node 20 sera retiré le 16/09/2026).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 defaults:
   run:
     working-directory: smart_assistance

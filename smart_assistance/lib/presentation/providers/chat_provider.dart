@@ -165,8 +165,8 @@ class ChatProvider extends ChangeNotifier {
           case AiChunk(content: final chunk):
             final idx = _messages.indexWhere((m) => m.id == botId);
             if (idx >= 0) {
-              final updated =
-                  _messages[idx].copyWith(content: _messages[idx].content + chunk);
+              final updated = _messages[idx]
+                  .copyWith(content: _messages[idx].content + chunk);
               _messages[idx] = updated;
               notifyListeners();
             }

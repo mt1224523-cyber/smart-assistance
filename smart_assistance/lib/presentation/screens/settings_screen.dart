@@ -111,8 +111,7 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Langue de réponse',
-                            style:
-                                Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           const SizedBox(width: 8),
                           Tooltip(

@@ -88,10 +88,10 @@ class AIService {
     http.StreamedResponse streamed;
     try {
       streamed = await _client.send(request).timeout(
-        const Duration(seconds: 120),
-        onTimeout: () =>
-            throw TimeoutException('Le serveur ne répond pas à temps'),
-      );
+            const Duration(seconds: 120),
+            onTimeout: () =>
+                throw TimeoutException('Le serveur ne répond pas à temps'),
+          );
     } on TimeoutException {
       _lastError = 'timeout';
       yield const AiError('timeout', 'Délai dépassé. Réessayez.');

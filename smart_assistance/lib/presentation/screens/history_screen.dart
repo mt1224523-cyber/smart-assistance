@@ -48,8 +48,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
             return _EmptyState(theme: Theme.of(context));
           }
 
-          final userMessages =
-              provider.messages.where((m) => m.isUser).toList().reversed.toList();
+          final userMessages = provider.messages
+              .where((m) => m.isUser)
+              .toList()
+              .reversed
+              .toList();
           final filtered = _query.isEmpty
               ? userMessages
               : userMessages
@@ -81,10 +84,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             )
                           : null,
                       filled: true,
-                      fillColor:
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white12
-                              : Colors.grey[100],
+                      fillColor: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white12
+                          : Colors.grey[100],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide.none,
